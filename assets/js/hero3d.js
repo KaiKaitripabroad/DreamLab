@@ -11,6 +11,12 @@
   const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
   camera.position.set(0, 0, 5);
 
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.enableZoom = true;
+  controls.enablePan = false;
+
   // Resize
   function resize() {
     const w = canvas.clientWidth;
@@ -53,7 +59,7 @@
   ptGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
   const ptMat = new THREE.PointsMaterial({
-    color: 0x00c9ff,
+    color: 0xfffdcc,
     size: 0.04,
     transparent: true,
     opacity: 0.55,
@@ -74,7 +80,7 @@
   const fishGeo = new THREE.BufferGeometry();
   fishGeo.setAttribute('position', new THREE.BufferAttribute(fishPos, 3));
   const fishMat = new THREE.PointsMaterial({
-    color: 0xff8c42,
+    color: 0xffff00,
     size: 0.1,
     transparent: true,
     opacity: 0.7,
@@ -130,6 +136,7 @@
       fa.setY(i, fa.getY(i) + Math.sin(t * 0.6 + i) * 0.003);
     }
     fa.needsUpdate = true;
+    controls.update();
 
     // Camera parallax
     camera.position.x += (mx * 0.4 - camera.position.x) * 0.04;
