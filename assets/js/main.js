@@ -53,3 +53,24 @@ const sectionObserver = new IntersectionObserver(
   { rootMargin: '-40% 0px -50% 0px' }
 );
 sections.forEach(s => sectionObserver.observe(s));
+
+// ——— Event map: close / reopen ———
+const eventMapBlock = document.getElementById('eventMapBlock');
+const eventMapClose = document.getElementById('eventMapClose');
+const eventMapReopen = document.getElementById('eventMapReopen');
+
+function setEventMapOpen(open) {
+  if (!eventMapBlock || !eventMapClose || !eventMapReopen) return;
+  if (open) {
+    eventMapBlock.classList.remove('is-closed');
+    eventMapReopen.hidden = true;
+    eventMapClose.setAttribute('aria-expanded', 'true');
+  } else {
+    eventMapBlock.classList.add('is-closed');
+    eventMapReopen.hidden = false;
+    eventMapClose.setAttribute('aria-expanded', 'false');
+  }
+}
+
+eventMapClose?.addEventListener('click', () => setEventMapOpen(false));
+eventMapReopen?.addEventListener('click', () => setEventMapOpen(true));
